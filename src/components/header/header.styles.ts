@@ -1,13 +1,16 @@
 import { cva } from "class-variance-authority";
-// import { FileX } from "lucide-react";
 
 export const header = cva(
   [
-    "Header",
-    "h-[69px]",
-    "w-screen",
-    "flex justify-between items-center",
-    "top-0	",
+    // "xl: w-xl",
+    "h-[68px]",
+    // "w-screen",
+    "flex",
+    "justify-between",
+    "items-center",
+    "px-4",
+    "py-4",
+    "mx-auto",
   ],
   {
     variants: {
@@ -18,3 +21,5 @@ export const header = cva(
     },
   },
 );
+
+export const container = cva(["w-[1024px]"]);

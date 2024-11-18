@@ -18,7 +18,7 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
     },
     rules: {
-      "@typsecript-eslint/ban-ts-comment": "warn",
+      // "@typsecript-eslint/ban-ts-comment": "warn",
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": [
         "warn",
