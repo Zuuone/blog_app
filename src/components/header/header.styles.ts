@@ -3,6 +3,7 @@ import { cva } from "class-variance-authority";
 export const header = cva(
   [
     // "xl: w-xl",
+
     "h-[68px]",
     // "w-screen",
     "flex",
@@ -22,4 +23,4 @@ export const header = cva(
   },
 );
 
-export const container = cva(["w-[1024px]"]);
+export const container = cva(["w-full", "max-w-[1536px]"]);

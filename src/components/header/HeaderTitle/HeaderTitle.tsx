@@ -1,5 +1,9 @@
 import React from "react";
 
 export const HeaderTitle: React.FC<{ title: string }> = ({ title }) => {
-  return <h2> {title} </h2>;
+  return (
+    <a className="text-inherit text-2xl font-bold dark:text-white text-black">
+      {title}
+    </a>
+  );
 };

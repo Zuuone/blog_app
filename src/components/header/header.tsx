@@ -1,48 +1,44 @@
 import { HeaderTitle } from "@/components/header/HeaderTitle/HeaderTitle";
 import { useTranslation } from "react-i18next";
-import { HeaderProps } from "@/components/header/header.types";
+// import { HeaderProps } from "@/components/header/header.types";
 import { container, header } from "@/components/header/header.styles";
 import { ModeToggle } from "@/components/mode-toggle/mode-toggle";
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-} from "@/components/ui/navigation-menu";
+
 import SearchButton from "@/components/header/search/search";
 import Login from "@/components/header/login/login";
 import Langtoggle from "@/components/header/langoptions/langtoggle";
+import HeaderNavigationMenu from "@/components/header/headerNavMenu/nav";
+import { Link } from "react-router-dom";
+import { HeaderNavItem } from "@/components/header/headerNavItem/headerNavItem";
 
-const Header: React.FC<HeaderProps> = () => {
+const Header: React.FC = () => {
   const { t } = useTranslation(); // Access the translation function
 
   return (
-    <header className="border-b">
+    <header className={`border-b `}>
       <div className={`${container()} ${header()}`}>
         {/* Pass the translated title string to HeaderTitle component */}
-        <a className="text-2xl font-bold">
+        <Link to="/">
           <HeaderTitle title={t("title-translation")} />
-        </a>
+        </Link>
 
-        <div>
-          {" "}
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuLink href="#home">Home</NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink href="#write">Write</NavigationMenuLink>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <NavigationMenuLink href="#about">About</NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
+        <HeaderNavigationMenu>
+          <Link to="/home">
+            <HeaderNavItem text={t("nav-item-home")} />
+          </Link>
+          <Link to="/write">
+            <HeaderNavItem text={t("nav-item-write")} />
+          </Link>
+          <Link to="/about">
+            <HeaderNavItem text={t("nav-item-about")} />
+          </Link>
+        </HeaderNavigationMenu>
+
         <div className="flex items-center space-x-4">
           <SearchButton />
-          <Login />
+          <Link to="signIn">
+            <Login />
+          </Link>
           <Langtoggle />
           <ModeToggle />
         </div>

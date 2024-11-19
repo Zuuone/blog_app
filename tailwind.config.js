@@ -4,6 +4,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      colors: {
+        headerColor: "#243c5a",
+      },
       maxWidth: {
         1024: "1024px",
       },
