@@ -1,4 +1,4 @@
-import { Link } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   return (
@@ -62,7 +62,7 @@ const SignIn = () => {
           </a>
           <p className="text-sm text-muted-foreground">
             Don't have an account?{" "}
-            <Link to="register" className="text-primary hover:underline">
+            <Link to="/signUp" className="text-primary hover:underline">
               Sign up
             </Link>
           </p>

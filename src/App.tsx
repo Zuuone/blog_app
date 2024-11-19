@@ -52,7 +52,7 @@ function App() {
             }
           />
           <Route
-            path="register"
+            path="signUp"
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <LazySignUpView />

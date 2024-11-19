@@ -36,7 +36,7 @@ const Header: React.FC = () => {
 
         <div className="flex items-center space-x-4">
           <SearchButton />
-          <Link to="signIn">
+          <Link to="/signIn">
             <Login />
           </Link>
           <Langtoggle />
