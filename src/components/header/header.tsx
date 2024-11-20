@@ -37,7 +37,7 @@ const Header: React.FC = () => {
         <div className="flex items-center space-x-4">
           <SearchButton />
           <Link to="/signIn">
-            <Login />
+            <Login loginText={t("nav-item-sign-in")} />
           </Link>
           <Langtoggle />
           <ModeToggle />

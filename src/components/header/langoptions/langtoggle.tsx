@@ -51,9 +51,14 @@
 
 // import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
+import { useTranslation } from "react-i18next";
 
 // Language Toggle Button
 const Langtoggle = () => {
+  const { t, i18n } = useTranslation();
+  const handleLanguageChange = (lang: string) => {
+    i18n.changeLanguage(lang); // Change the language when a user selects a language
+  };
   return (
     <DropdownMenuPrimitive.Root>
       {/* Dropdown trigger */}
@@ -150,8 +155,9 @@ const Langtoggle = () => {
           tabIndex={-1}
           data-orientation="vertical"
           data-radix-collection-item=""
+          onClick={() => handleLanguageChange("en")} // Change language to English
         >
-          English
+          {t("English")}
         </div>
 
         <div
@@ -160,8 +166,9 @@ const Langtoggle = () => {
           tabIndex={-1}
           data-orientation="vertical"
           data-radix-collection-item=""
+          onClick={() => handleLanguageChange("ka")} // Change language to Georgian
         >
-          ქართული
+          {t("ქართული")}
         </div>
       </DropdownMenuPrimitive.Content>
     </DropdownMenuPrimitive.Root>
