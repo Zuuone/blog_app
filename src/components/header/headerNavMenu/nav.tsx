@@ -5,7 +5,7 @@ import { PropsWithChildren } from "react";
 // import { NavigationMenuLink } from "@radix-ui/react-navigation-menu";
 
 const HeaderNavigationMenu: React.FC<PropsWithChildren> = ({ children }) => {
-  return <nav className="hidden md:flex space-x-4">{children}</nav>;
+  return <nav className="hidden space-x-4 md:flex">{children}</nav>;
 };
 
 export default HeaderNavigationMenu;

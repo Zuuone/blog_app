@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   const { t } = useTranslation(); // Access the translation function
 
   return (
-    <header className={`border-b `}>
+    <header className={`border-b`}>
       <div className={`${container()} ${header()}`}>
         {/* Pass the translated title string to HeaderTitle component */}
         <Link to="/">

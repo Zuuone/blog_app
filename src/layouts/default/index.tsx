@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 
 const DefaultPage = () => {
   return (
-    <main className="px-4 py-8 flex-grow">
-      <div className="container mx-auto flex flex-col md:flex-row gap-8">
-        <section className="md:w-2/3 space-y-8 flex flex-col">
+    <main className="flex-grow px-4 py-8">
+      <div className="container mx-auto flex flex-col gap-8 md:flex-row">
+        <section className="flex flex-col space-y-8 md:w-2/3">
           <Link to="/posts/1">
             <div className="rounded-xl border bg-card text-card-foreground shadow">
               <div className="flex flex-col space-y-1.5 p-6">
@@ -12,15 +12,15 @@ const DefaultPage = () => {
                   <img
                     src="https://g-zwkebgiacpe.vusercontent.net/placeholder.svg?height=200&amp;width=400"
                     alt="Cover image for The Future of Blockchain Technology"
-                    className="rounded-lg object-cover w-full h-[200px]"
+                    className="h-[200px] w-full rounded-lg object-cover"
                   />
                 </div>
-                <div className="tracking-tight text-2xl font-bold">
+                <div className="text-2xl font-bold tracking-tight">
                   The Future of Blockchain Technology
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Link
-                    className="hover:underline text-muted-foreground"
+                    className="text-muted-foreground hover:underline"
                     to="/author/1"
                   >
                     John Doe
@@ -42,17 +42,17 @@ const DefaultPage = () => {
               <div className="flex items-center p-6 pt-0">
                 <div className="flex space-x-2">
                   <Link to="/search">
-                    <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                    <div className="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                       Blockchain
                     </div>
                   </Link>
                   <Link to="/search">
-                    <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                    <div className="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                       Technology
                     </div>
                   </Link>
                   <Link to="/search">
-                    <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                    <div className="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                       Future
                     </div>
                   </Link>
@@ -68,15 +68,15 @@ const DefaultPage = () => {
                   <img
                     src="https://g-zwkebgiacpe.vusercontent.net/placeholder.svg?height=200&amp;width=400"
                     alt="Cover image for Cryptocurrency: A Beginner's Guide"
-                    className="rounded-lg object-cover w-full h-[200px]"
+                    className="h-[200px] w-full rounded-lg object-cover"
                   />
                 </div>
-                <div className="tracking-tight text-2xl font-bold">
+                <div className="text-2xl font-bold tracking-tight">
                   Cryptocurrency: A Beginner's Guide
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Link
-                    className="hover:underline text-muted-foreground"
+                    className="text-muted-foreground hover:underline"
                     to="/author/2"
                   >
                     Jane Smith
@@ -98,17 +98,17 @@ const DefaultPage = () => {
               <div className="flex items-center p-6 pt-0">
                 <div className="flex space-x-2">
                   <Link to="/search">
-                    <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 ">
+                    <div className="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                       Blockchain
                     </div>
                   </Link>
                   <Link to="/search">
-                    <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                    <div className="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                       Technology
                     </div>
                   </Link>
                   <Link to="/search">
-                    <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                    <div className="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                       Future
                     </div>
                   </Link>
@@ -124,15 +124,15 @@ const DefaultPage = () => {
                   <img
                     src="https://g-zwkebgiacpe.vusercontent.net/placeholder.svg?height=200&amp;width=400"
                     alt="Cover image for Decentralized Finance (DeFi) Explained"
-                    className="rounded-lg object-cover w-full h-[200px]"
+                    className="h-[200px] w-full rounded-lg object-cover"
                   />
                 </div>
-                <div className="tracking-tight text-2xl font-bold">
+                <div className="text-2xl font-bold tracking-tight">
                   Decentralized Finance (DeFi) Explained
                 </div>
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                   <Link
-                    className="hover:underline text-muted-foreground"
+                    className="text-muted-foreground hover:underline"
                     to="/author/3"
                   >
                     Alex Johnson
@@ -154,17 +154,17 @@ const DefaultPage = () => {
               <div className="flex items-center p-6 pt-0">
                 <div className="flex space-x-2">
                   <Link to="/search">
-                    <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                    <div className="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                       Blockchain
                     </div>
                   </Link>
                   <Link to="/search">
-                    <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                    <div className="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                       Technology
                     </div>
                   </Link>
                   <Link to="/search">
-                    <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                    <div className="inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                       Future
                     </div>
                   </Link>
@@ -174,7 +174,7 @@ const DefaultPage = () => {
           </Link>
         </section>
 
-        <aside className="md:w-1/3 space-y-8">
+        <aside className="space-y-8 md:w-1/3">
           <div className="rounded-xl border bg-card text-card-foreground shadow">
             <div className="flex flex-col space-y-1.5 p-6">
               <div className="font-semibold leading-none tracking-tight">
@@ -184,32 +184,32 @@ const DefaultPage = () => {
             <div className="p-6 pt-0">
               <div className="flex flex-wrap gap-2">
                 <Link to="/search">
-                  <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-white shadow hover:bg-primary/80">
+                  <div className="inline-flex items-center rounded-md border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold text-white shadow transition-colors hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                     Blockchain
                   </div>
                 </Link>
                 <Link to="/search">
-                  <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-white shadow hover:bg-primary/80">
+                  <div className="inline-flex items-center rounded-md border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold text-white shadow transition-colors hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                     Cryptocurrency
                   </div>
                 </Link>
                 <Link to="/search">
-                  <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-white shadow hover:bg-primary/80">
+                  <div className="inline-flex items-center rounded-md border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold text-white shadow transition-colors hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                     Technology
                   </div>
                 </Link>
                 <Link to="/search">
-                  <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-white shadow hover:bg-primary/80">
+                  <div className="inline-flex items-center rounded-md border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold text-white shadow transition-colors hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                     Programming
                   </div>
                 </Link>
                 <Link to="/search">
-                  <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-white shadow hover:bg-primary/80">
+                  <div className="inline-flex items-center rounded-md border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold text-white shadow transition-colors hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                     AI
                   </div>
                 </Link>
                 <Link to="/search">
-                  <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-white shadow hover:bg-primary/80">
+                  <div className="inline-flex items-center rounded-md border border-transparent bg-primary px-2.5 py-0.5 text-xs font-semibold text-white shadow transition-colors hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                     Machine Learning
                   </div>
                 </Link>
@@ -235,10 +235,10 @@ const DefaultPage = () => {
                       />
                     </span>
                     <div>
-                      <span className="hover:underline text-black dark:text-white">
+                      <span className="text-black hover:underline dark:text-white">
                         Alice Johnson
                       </span>
-                      <p className="text-sm text-muted-foreground font-light  text-black dark:text-white">
+                      <p className="text-sm font-light text-black text-muted-foreground dark:text-white">
                         Blockchain Enthusiast
                       </p>
                     </div>
@@ -253,10 +253,10 @@ const DefaultPage = () => {
                       />
                     </span>
                     <div>
-                      <span className="hover:underline text-black dark:text-white">
+                      <span className="text-black hover:underline dark:text-white">
                         Bob Smith
                       </span>
-                      <p className="text-sm text-muted-foreground  font-light  text-black dark:text-white">
+                      <p className="text-sm font-light text-black text-muted-foreground dark:text-white">
                         Crypto Analyst
                       </p>
                     </div>
@@ -271,10 +271,10 @@ const DefaultPage = () => {
                       />
                     </span>
                     <div>
-                      <span className="hover:underline text-black dark:text-white">
+                      <span className="text-black hover:underline dark:text-white">
                         Carol Williams
                       </span>
-                      <p className="text-sm text-muted-foreground font-light  text-black dark:text-white">
+                      <p className="text-sm font-light text-black text-muted-foreground dark:text-white">
                         Tech Journalist
                       </p>
                     </div>

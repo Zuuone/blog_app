@@ -12,6 +12,15 @@ const LazyHomeView = lazy(() => import("@/layouts/default/index"));
 const LazyAboutView = lazy(() => import("@/pages/aboutUs/views/index"));
 const LazyLoginView = lazy(() => import("@/pages/auth/signIn/signIn"));
 const LazySignUpView = lazy(() => import("@/pages/auth/signUp/signUp"));
+const LazyAuthorFourView = lazy(
+  () => import("@/pages/authors/author4/views/index"),
+);
+const LazyAuthorFiveView = lazy(
+  () => import("@/pages/authors/author5/views/index"),
+);
+const LazyAuthorSixView = lazy(
+  () => import("@/pages/authors/author6/views/index"),
+);
 
 function App() {
   return (
@@ -56,6 +65,30 @@ function App() {
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <LazySignUpView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="author/4"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazyAuthorFourView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="author/5"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazyAuthorFiveView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="author/6"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazyAuthorSixView />
               </Suspense>
             }
           />

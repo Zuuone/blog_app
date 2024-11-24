@@ -1,8 +1,8 @@
 const SearchButton = () => {
   return (
-    <div className="relative ">
+    <div className="relative">
       <button
-        className="relative flex items-center bg-transparent p-0 "
+        className="relative flex items-center bg-transparent p-0"
         type="button"
         aria-haspopup="dialog"
         aria-expanded="false"
@@ -16,9 +16,9 @@ const SearchButton = () => {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="lucide lucide-search text-muted-foreground"
         >
           <circle cx="11" cy="11" r="8"></circle>

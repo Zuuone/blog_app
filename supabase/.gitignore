@@ -1,0 +1,7 @@
+# Supabase
+.branches
+.temp
+.env
+
+
+# npx supabase gen types --lang=typescript --project-id qublrbvjeskpiikimhqc --schema public > src/supabase/supabase.types.ts
