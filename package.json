@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "prettier": "prettier . --write",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "update supabase types": "npx supabase gen types --lang=typescript --project-id nhxmyxnroufzfvhhmsrx --schema public > src/supabase/supabasebase.types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
