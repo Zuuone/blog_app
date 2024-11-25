@@ -10,10 +10,24 @@ import Langtoggle from "@/components/header/langoptions/langtoggle";
 import HeaderNavigationMenu from "@/components/header/headerNavMenu/nav";
 import { Link } from "react-router-dom";
 import { HeaderNavItem } from "@/components/header/headerNavItem/headerNavItem";
+// import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
+import { AuthContext } from "@/context/auth/auth";
+import { useMutation } from "@tanstack/react-query";
+import { logout } from "@/supabase/auth";
+import { useAtomValue } from "jotai";
+import { userAtom } from "@/store/auth";
 
 const Header: React.FC = () => {
-  const { t } = useTranslation(); // Access the translation function
+  // const { user } = useAuthaContext();
+  // const [user] = useAtom(userAtom);
+  const user = useAtomValue(userAtom);
 
+  const { mutate: handleLogout } = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: logout,
+  });
+  const { t } = useTranslation(); // Access the translation function
+  console.log("from custom hook", AuthContext);
   return (
     <header className={`border-b`}>
       <div className={`${container()} ${header()}`}>
@@ -36,9 +50,15 @@ const Header: React.FC = () => {
 
         <div className="flex items-center space-x-4">
           <SearchButton />
-          <Link to="/signIn">
-            <Login loginText={t("nav-item-sign-in")} />
-          </Link>
+          {user ? (
+            <span className="cursor-pointer" onClick={() => handleLogout()}>
+              logout
+            </span>
+          ) : (
+            <Link to="/signIn">
+              <Login loginText={t("nav-item-sign-in")} />
+            </Link>
+          )}
           <Langtoggle />
           <ModeToggle />
         </div>

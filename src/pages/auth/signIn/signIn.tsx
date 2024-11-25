@@ -13,36 +13,50 @@
 // import { Link } from "react-router-dom";
 import { FormItem } from "@/components/ui/form";
 
-import { register } from "@/supabase/auth"; // Assuming 'register' is the function to handle registration
+import { login } from "@/supabase/auth"; // Assuming 'register' is the function to handle registration
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Label } from "@radix-ui/react-label";
 import { CardDescription, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+// import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
 
 const SignIn = () => {
-  const [registerPayload, setRegisterPayload] = useState({
+  // const { handleSetUser } = useAuthContext();
+
+  const navigate = useNavigate();
+  const [loginPayload, setLoginPayload] = useState({
     email: "",
     password: "",
   });
 
-  const { mutate: handleRegister } = useMutation({
-    mutationKey: ["register"],
-    mutationFn: register, // This is the mutation function (ensure it's correctly implemented)
+  const {
+    mutate: handleLogin,
+    isError,
+    error,
+  } = useMutation({
+    mutationKey: ["login"],
+    mutationFn: login,
+    onSuccess: () => {
+      // handleSetUser(res.data.user);
+      navigate("/home");
+    }, // This is the mutation function (ensure it's correctly implemented)
   });
 
   const handleSubmit = () => {
-    const isEmailFilled = !!registerPayload.email;
-    const isPasswordFilled = !!registerPayload.password;
+    const isEmailFilled = !!loginPayload.email;
+    const isPasswordFilled = !!loginPayload.password;
 
     if (isEmailFilled && isPasswordFilled) {
-      handleRegister(registerPayload);
+      handleLogin(loginPayload);
     } else {
       // Handle validation error (optional)
 
       console.log("Email and password must be filled.");
     }
   };
+
+  console.log(isError, error);
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-3">
@@ -65,11 +79,11 @@ const SignIn = () => {
               className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
               name="email"
               placeholder="John@example.com"
-              value={registerPayload.email}
+              value={loginPayload.email}
               onChange={(e) => {
-                setRegisterPayload({
+                setLoginPayload({
                   email: e.target.value,
-                  password: registerPayload.password,
+                  password: loginPayload.password,
                 });
               }}
             />
@@ -83,10 +97,10 @@ const SignIn = () => {
               className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
               type="password"
               name="password"
-              value={registerPayload.password}
+              value={loginPayload.password}
               onChange={(e) => {
-                setRegisterPayload({
-                  email: registerPayload.email,
+                setLoginPayload({
+                  email: loginPayload.email,
                   password: e.target.value,
                 });
               }}

@@ -2,11 +2,18 @@ import "./App.css";
 import Header from "@/components/header/header";
 // import Index from "@/components/pages/test";
 import "./i18n";
-import { ThemeProvider } from "@/components/theme-provider"; // Import ThemeProvider
+import { ThemeProvider } from "@/components/ui/theme-provider"; // Import ThemeProvider
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import Footer from "@/components/base/footer/footer";
+import { supabase } from "@/supabase";
+// import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
+import AuthGuard from "@/components/route-guards/auth";
+import { useSetAtom } from "jotai";
+import { userAtom } from "@/store/auth";
+// import { supabase } from "@/supabase";
+// import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
 const LazyWriteUsView = lazy(() => import("@/pages/writeUs/views/index"));
 const LazyHomeView = lazy(() => import("@/layouts/default/index"));
 const LazyAboutView = lazy(() => import("@/pages/aboutUs/views/index"));
@@ -23,6 +30,25 @@ const LazyAuthorSixView = lazy(
 );
 
 function App() {
+  // const [, setUser] = useAtom(userAtom);
+  const setUser = useSetAtom(userAtom);
+  // const { handleSetUser } = useAuthContext();
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      // handleSetUser(session);
+      setUser(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log("Session: ", session);
+      // handleSetUser(session);
+      setUser(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [setUser]);
   return (
     <BrowserRouter>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -56,7 +82,9 @@ function App() {
             path="signIn"
             element={
               <Suspense fallback={<div>Loading...</div>}>
-                <LazyLoginView />
+                <AuthGuard>
+                  <LazyLoginView />
+                </AuthGuard>
               </Suspense>
             }
           />
@@ -64,7 +92,9 @@ function App() {
             path="signUp"
             element={
               <Suspense fallback={<div>Loading...</div>}>
-                <LazySignUpView />
+                <AuthGuard>
+                  <LazySignUpView />
+                </AuthGuard>
               </Suspense>
             }
           />
