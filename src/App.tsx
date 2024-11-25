@@ -28,6 +28,9 @@ const LazyAuthorFiveView = lazy(
 const LazyAuthorSixView = lazy(
   () => import("@/pages/authors/author6/views/index"),
 );
+const LazyProfileView = lazy(
+  () => import("@/pages/account/view/profile/index"),
+);
 
 function App() {
   // const [, setUser] = useAtom(userAtom);
@@ -75,6 +78,14 @@ function App() {
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <LazyAboutView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazyProfileView />
               </Suspense>
             }
           />

@@ -16,6 +16,8 @@ import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/supabase/auth";
 import { useAtomValue } from "jotai";
 import { userAtom } from "@/store/auth";
+import Avatar from "@/components/header/avatar/views/avatar";
+// import { Avatar } from "@/components/ui/avatar";
 
 const Header: React.FC = () => {
   // const { user } = useAuthaContext();
@@ -51,9 +53,15 @@ const Header: React.FC = () => {
         <div className="flex items-center space-x-4">
           <SearchButton />
           {user ? (
-            <span className="cursor-pointer" onClick={() => handleLogout()}>
-              logout
-            </span>
+            <div className="flex flex-row gap-5">
+              <Link to="/profile">
+                <Avatar userId={user?.user?.id || "default-avatar"} />
+              </Link>
+
+              <span className="cursor-pointer" onClick={() => handleLogout()}>
+                logout
+              </span>
+            </div>
           ) : (
             <Link to="/signIn">
               <Login loginText={t("nav-item-sign-in")} />

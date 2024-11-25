@@ -11,9 +11,12 @@
     "prettier": "prettier . --write",
     "preview": "vite preview",
     "prepare": "husky",
-    "update supabase types": "npx supabase gen types --lang=typescript --project-id nhxmyxnroufzfvhhmsrx --schema public > src/supabase/supabasebase.types.ts"
+    "update-supabase-types": "npx supabase gen types --lang=typescript --project-id nhxmyxnroufzfvhhmsrx --schema public > src/supabase/account/index.types.ts"
   },
   "dependencies": {
+    "@dicebear/avataaars": "^9.2.2",
+    "@dicebear/collection": "^9.2.2",
+    "@dicebear/core": "^9.2.2",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.2",
@@ -23,9 +26,11 @@
     "@radix-ui/react-tabs": "^1.1.1",
     "@supabase/supabase-js": "^2.46.1",
     "@tanstack/react-query": "^5.61.0",
+    "avataaars": "^2.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cva": "^0.0.0",
+    "dicebear": "^9.2.2",
     "i18next": "^23.16.5",
     "jotai": "^2.10.3",
     "lucide-react": "^0.460.0",
