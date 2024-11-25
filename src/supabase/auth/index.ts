@@ -1,10 +1,10 @@
 import { supabase } from "@/supabase";
 
 export const register = ({
-  name,
+  // name,
   email,
   password,
-  confirmPassword,
+  // confirmPassword,
 }: {
   name: string;
   email: string;
