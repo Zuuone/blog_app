@@ -1,0 +1,10 @@
+{
+  "profile_avatar_url": "Avatar URL should be filled",
+  "profile_avatar_url_length": "Avatar URL should consist at least 8 charachers",
+  "profile_full_name_en": "Name in English is required",
+  "profile_full_name_en_length": "Should consist at least 2 letters",
+  "profile_full_name_ka": "Name in Georgian is required",
+  "profile_full_name_ka_length": "Should consist at least 2 letters",
+  "profile_phone_number_length": "Should consist at least 9 digits",
+  "profile_phone_number_max_length": "Should consist not more than 15 digits"
+}

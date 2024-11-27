@@ -8,10 +8,10 @@ import SearchButton from "@/components/header/search/search";
 import Login from "@/components/header/login/login";
 import Langtoggle from "@/components/header/langoptions/langtoggle";
 import HeaderNavigationMenu from "@/components/header/headerNavMenu/nav";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HeaderNavItem } from "@/components/header/headerNavItem/headerNavItem";
 // import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
-import { AuthContext } from "@/context/auth/auth";
+// import { AuthContext } from "@/context/auth/auth";
 import { useMutation } from "@tanstack/react-query";
 import { logout } from "@/supabase/auth";
 import { useAtomValue } from "jotai";
@@ -23,13 +23,17 @@ const Header: React.FC = () => {
   // const { user } = useAuthaContext();
   // const [user] = useAtom(userAtom);
   const user = useAtomValue(userAtom);
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const { mutate: handleLogout } = useMutation({
     mutationKey: ["logout"],
     mutationFn: logout,
+    onSuccess: () => {
+      navigate("/signIn"); // Wrap the navigate call in a function
+    },
   });
   const { t } = useTranslation(); // Access the translation function
-  console.log("from custom hook", AuthContext);
+  // console.log("from custom hook", AuthContext);
   return (
     <header className={`border-b`}>
       <div className={`${container()} ${header()}`}>

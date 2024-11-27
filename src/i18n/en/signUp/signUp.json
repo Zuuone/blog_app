@@ -1,0 +1,12 @@
+{
+  "signUp-name": "Name is required",
+  "signUp-email": "E-mail is required",
+  "signUp-password": "Password is required",
+  "signUp-confirm-password": "Password should be confirmed",
+  "signUp-nameMinLength": "Name should consist at least two letters",
+  "signUp-emailMinLength": "E-mail should consist at least fifteen characters!",
+  "signUp-passwordLength": "Password should consist at least 8 characters!",
+  "signUp-confirm-password-Length": "Password should consist at least 8 characters!",
+  "SignUp-valid-email-text": "Please enter a valid email",
+  "passowrd-maxLength": "Password should not exceed 30 characters"
+}

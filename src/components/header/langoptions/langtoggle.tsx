@@ -59,6 +59,7 @@ const Langtoggle = () => {
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang); // Change the language when a user selects a language
   };
+
   return (
     <DropdownMenuPrimitive.Root>
       {/* Dropdown trigger */}

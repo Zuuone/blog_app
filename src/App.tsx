@@ -45,7 +45,7 @@ function App() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      console.log("Session: ", session);
+      // console.log("Session: ", session);
       // handleSetUser(session);
       setUser(session);
     });

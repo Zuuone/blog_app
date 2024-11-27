@@ -1,0 +1,10 @@
+{
+  "profile_avatar_url": "ავატარის მისამართის შევსება სავალდებულოა",
+  "profile_avatar_url_length": "ავატარის მისამართი უნდა შედგებოდეს მინიმუმ 8 სიმბოლოსგან",
+  "profile_full_name_en": "სახელის ინგლისურად შეყვანა სავალდებულოა",
+  "profile_full_name_en_length": "უნდა შედგებოდეს მინიმუმ 2 ასოსგან",
+  "profile_full_name_ka": "სახელის ქართულად შეყვანა სავალდებულოა",
+  "profile_full_name_ka_length": "უნდა შედგებოდეს მინიმუმ 2 ასოსგან",
+  "profile_phone_number_length": "უნდა შედგებოდეს მინიმუმ 9 ციფრისგან",
+  "profile_phone_number_max_length": "უნდა შედგებოდეს მაქსიმუმ 15 ციფრისგან"
+}

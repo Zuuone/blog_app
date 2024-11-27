@@ -1,12 +1,27 @@
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
-import { register } from "@/supabase/auth";
+// import { FillProfileInfoPayload } from "@/supabase/account/index.types";
+import { register, SignUpPayload } from "@/supabase/auth";
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+// import { useTranslation } from "react-i18next";
+// import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
+  const { t, i18n } = useTranslation(); // Add i18n for language change detection
+
+  // console.log(t("signUp-name"));
+
+  const {
+    register: hookForRegister,
+    handleSubmit,
+    formState,
+  } = useForm<SignUpPayload>();
+
   const [registerPayload, setRegisterPayload] = useState({
     name: "",
     email: "",
@@ -19,8 +34,8 @@ const SignUp = () => {
     mutationFn: register, // This is the mutation function (ensure it's correctly implemented)
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (fieldValues: SignUpPayload) => {
+    // e.preventDefault();
     const isEmailFilled = !!registerPayload.email;
     const isPasswordFilled = !!registerPayload.password;
     const isNameFilled = !!registerPayload.name;
@@ -33,13 +48,33 @@ const SignUp = () => {
       isConfirmPassowrdFilled &&
       isPasswordFilled === isConfirmPassowrdFilled
     ) {
-      handleRegister(registerPayload);
+      handleRegister(fieldValues);
+      console.log(fieldValues);
     } else {
       // Handle validation error (optional)
 
       console.log("Name, Email, password and confirm password must be filled.");
     }
   };
+
+  // console.log(formState.errors);
+
+  useEffect(() => {
+    // Trigger re-validation of the form when language changes
+    if (formState.errors.name) {
+      formState.errors.name.message = t("signUp-name"); // Update error message dynamically
+    }
+    if (formState.errors.email) {
+      formState.errors.email.message = t("signUp-email"); // Update error message dynamically
+    }
+    if (formState.errors.password) {
+      formState.errors.password.message = t("signUp-password"); // Update error message dynamically
+    }
+    if (formState.errors.confirmPassword) {
+      formState.errors.confirmPassword.message = t("signUp-confirmPassword"); // Update error message dynamically
+    }
+  }, [i18n.language]);
+
   return (
     <div className="flex min-h-screen flex-grow flex-col items-center justify-center">
       <div className="w-full max-w-md rounded-xl border bg-card text-card-foreground shadow">
@@ -63,9 +98,16 @@ const SignUp = () => {
                 <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   Name
                 </Label>
+
                 <input
                   className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                  name="name"
+                  {...hookForRegister("name", {
+                    required: t("signUp-name"),
+                    minLength: {
+                      value: 2,
+                      message: t("signUp-nameMinLength"),
+                    },
+                  })}
                   placeholder="John Doe"
                   value={registerPayload.name}
                   onChange={(e) => {
@@ -79,7 +121,11 @@ const SignUp = () => {
                 />
               </FormItem>
             </div>
-
+            <div>
+              {formState.errors?.name ? (
+                <span>{formState.errors.name.message}</span>
+              ) : null}
+            </div>
             {/* Email input field */}
             <div className="space-y-2">
               <FormItem className="flex flex-col gap-1">
@@ -88,7 +134,20 @@ const SignUp = () => {
                 </Label>
                 <input
                   className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                  name="email"
+                  {...hookForRegister("email", {
+                    pattern: {
+                      value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                      message: t("SignUp-valid-email-text"),
+                    },
+                    minLength: {
+                      value: 15,
+                      message: t("signUp-emailMinLength"),
+                    },
+                    maxLength: {
+                      value: 30,
+                      message: t("passowrd-maxLength"),
+                    },
+                  })}
                   placeholder="John@examle.com"
                   value={registerPayload.email}
                   onChange={(e) => {
@@ -101,8 +160,12 @@ const SignUp = () => {
                   }}
                 />
               </FormItem>
+            </div>{" "}
+            <div>
+              {formState.errors?.email ? (
+                <span>{formState.errors.email.message}</span>
+              ) : null}
             </div>
-
             {/* Password input field */}
             <div className="space-y-2">
               <FormItem className="flex flex-col gap-1">
@@ -111,7 +174,17 @@ const SignUp = () => {
                 </Label>
                 <input
                   className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                  name="password"
+                  {...hookForRegister("password", {
+                    required: t("signUp-password"),
+                    minLength: {
+                      value: 8,
+                      message: t("signUp-passwordLength"),
+                    },
+                    maxLength: {
+                      value: 30,
+                      message: t("passowrd-maxLength"),
+                    },
+                  })}
                   type="password"
                   placeholder="*******"
                   value={registerPayload.password}
@@ -126,7 +199,11 @@ const SignUp = () => {
                 />
               </FormItem>
             </div>
-
+            <div>
+              {formState.errors?.password ? (
+                <span>{formState.errors.password.message}</span>
+              ) : null}
+            </div>
             {/* Confirm Password input field */}
             <div className="space-y-2">
               <FormItem className="flex flex-col gap-1">
@@ -135,7 +212,17 @@ const SignUp = () => {
                 </Label>
                 <input
                   className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                  name="confirmpassowrd"
+                  {...hookForRegister("confirmPassword", {
+                    required: t("signUp-confirm-password"),
+                    minLength: {
+                      value: 8,
+                      message: t("signUp-confirm-password-Length"),
+                    },
+                    maxLength: {
+                      value: 30,
+                      message: t("passowrd-maxLength"),
+                    },
+                  })}
                   type="password"
                   placeholder="*******"
                   value={registerPayload.confirmPassword}
@@ -150,10 +237,14 @@ const SignUp = () => {
                 />
               </FormItem>
             </div>
-
+            <div>
+              {formState.errors?.confirmPassword ? (
+                <span>{formState.errors.confirmPassword.message}</span>
+              ) : null}
+            </div>
             {/* Submit Button */}
             <button
-              onClick={handleSubmit}
+              onClick={handleSubmit(onSubmit)}
               className="inline-flex h-9 w-full items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
               type="submit"
             >

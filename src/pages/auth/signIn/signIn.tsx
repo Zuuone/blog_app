@@ -14,27 +14,35 @@
 import { FormItem } from "@/components/ui/form";
 
 import { login } from "@/supabase/auth"; // Assuming 'register' is the function to handle registration
-import { useState } from "react";
+// import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Label } from "@radix-ui/react-label";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import { t } from "i18next";
+// import { useForm } from "react-hook-form";
 // import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
 
+type SignInValues = {
+  email: string;
+  password: string;
+};
+
 const SignIn = () => {
-  // const { handleSetUser } = useAuthContext();
+  const { control, handleSubmit, formState } = useForm<SignInValues>({
+    defaultValues: { email: "", password: "" },
+  }); // const { handleSetUser } = useAuthContext();
+
+  // const { register, handleSubmit } = useForm();
 
   const navigate = useNavigate();
-  const [loginPayload, setLoginPayload] = useState({
-    email: "",
-    password: "",
-  });
+  // const [loginPayload, setLoginPayload] = useState({
+  //   email: "",
+  //   password: "",
+  // });
 
-  const {
-    mutate: handleLogin,
-    isError,
-    error,
-  } = useMutation({
+  const { mutate: handleLogin } = useMutation({
     mutationKey: ["login"],
     mutationFn: login,
     onSuccess: () => {
@@ -43,20 +51,24 @@ const SignIn = () => {
     }, // This is the mutation function (ensure it's correctly implemented)
   });
 
-  const handleSubmit = () => {
-    const isEmailFilled = !!loginPayload.email;
-    const isPasswordFilled = !!loginPayload.password;
+  // const onSignInSubmit = (fieldValues: SignInValues) => {
+  //   const isEmailFilled = !!loginPayload.email;
+  //   const isPasswordFilled = !!loginPayload.password;
 
-    if (isEmailFilled && isPasswordFilled) {
-      handleLogin(loginPayload);
-    } else {
-      // Handle validation error (optional)
+  //   if (isEmailFilled && isPasswordFilled) {
+  //     handleLogin(fieldValues);
+  //   } else {
+  //     // Handle validation error (optional)
 
-      console.log("Email and password must be filled.");
-    }
+  //     console.log("Email and password must be filled.");
+  //   }
+  // };
+
+  const onSignInSubmit = (data: SignInValues) => {
+    handleLogin(data);
   };
 
-  console.log(isError, error);
+  // console.log(isError, error);
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-3">
@@ -75,41 +87,73 @@ const SignIn = () => {
             <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Email
             </Label>
-            <input
-              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+            <Controller
               name="email"
-              placeholder="John@example.com"
-              value={loginPayload.email}
-              onChange={(e) => {
-                setLoginPayload({
-                  email: e.target.value,
-                  password: loginPayload.password,
-                });
+              control={control}
+              rules={{
+                // Custom message for required field
+                pattern: {
+                  value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, // Email regex pattern
+                  message: t("signUp-email"),
+                },
+              }}
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <input
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    name="email"
+                    placeholder="John@example.com"
+                    onChange={onChange}
+                    value={value}
+                  />
+                );
               }}
             />
           </FormItem>
-
+          <div className="mt-2">
+            {formState?.errors?.email && (
+              <span>{formState.errors.email.message}</span>
+            )}
+          </div>
           <FormItem className="mt-4 flex flex-col gap-1">
             <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Password
             </Label>
-            <input
-              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-              type="password"
+            <Controller
               name="password"
-              value={loginPayload.password}
-              onChange={(e) => {
-                setLoginPayload({
-                  email: loginPayload.email,
-                  password: e.target.value,
-                });
+              control={control}
+              rules={{
+                required: t("signUp-password"),
+                minLength: {
+                  value: 8,
+                  message: t("signUp-passwordLength"),
+                },
+                maxLength: {
+                  value: 30,
+                  message: t("passowrd-maxLength"),
+                },
+              }}
+              render={({ field: { onChange, value } }) => {
+                return (
+                  <input
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                    type="password"
+                    name="password"
+                    onChange={onChange}
+                    value={value}
+                  />
+                );
               }}
             />
           </FormItem>
-
+          <div>
+            {formState?.errors?.password && (
+              <span>{formState.errors.password.message}</span>
+            )}
+          </div>
           <button
             className="mt-4 inline-flex h-9 w-full items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
-            onClick={handleSubmit}
+            onClick={handleSubmit(onSignInSubmit)}
           >
             Submit
           </button>
