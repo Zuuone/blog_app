@@ -7,10 +7,11 @@ import { userAtom } from "@/store/auth";
 import { fillProfileInfo, getProfileInfo } from "@/supabase/account";
 // import { FillProfileInfoPayload } from "@/supabase/account/index.types";
 import { useMutation } from "@tanstack/react-query";
-import { t } from "i18next";
+// import { t } from "i18next";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 // import { Link } from "react-router-dom";
 
 type ProfileInfoVlaues = {
@@ -30,10 +31,16 @@ const ProfileInfoValuesDefaults: ProfileInfoVlaues = {
 const ProfileView = () => {
   const user = useAtomValue(userAtom);
 
-  const { control, handleSubmit, formState } = useForm<ProfileInfoVlaues>({
-    defaultValues: ProfileInfoValuesDefaults,
-  });
+  const { t, i18n } = useTranslation();
 
+  const { control, handleSubmit, formState, trigger, reset } =
+    useForm<ProfileInfoVlaues>({
+      defaultValues: ProfileInfoValuesDefaults,
+    });
+
+  useEffect(() => {
+    reset(ProfileInfoValuesDefaults);
+  }, [reset]);
   // console.log(user);
   // const [profilePayload, setProfilePayload] = useState<FillProfileInfoPayload>({
   //   avatar_url: "",
@@ -48,6 +55,15 @@ const ProfileView = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    trigger();
+  }, [i18n.language]);
+
+  //
+
+  //
+
+  //
   const { mutate: handleFillProfileInfo } = useMutation({
     mutationKey: ["fill-profile-info"],
     mutationFn: fillProfileInfo,

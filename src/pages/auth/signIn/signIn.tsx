@@ -91,9 +91,8 @@ const SignIn = () => {
               name="email"
               control={control}
               rules={{
-                // Custom message for required field
                 pattern: {
-                  value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, // Email regex pattern
+                  value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                   message: t("signUp-email"),
                 },
               }}
