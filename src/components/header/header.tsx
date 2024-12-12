@@ -52,6 +52,9 @@ const Header: React.FC = () => {
           <Link to="/about">
             <HeaderNavItem text={t("nav-item-about")} />
           </Link>
+          <Link to="/blogs">
+            <HeaderNavItem text={t("nav-item-blogs")} />
+          </Link>
         </HeaderNavigationMenu>
 
         <div className="flex items-center space-x-4">

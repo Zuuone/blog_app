@@ -20,7 +20,9 @@ import { Label } from "@radix-ui/react-label";
 import { CardDescription, CardTitle } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import { t } from "i18next";
+// import { t } from "i18next";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 // import { useForm } from "react-hook-form";
 // import { useAuthContext } from "@/context/auth/hooks/useAuthContext";
 
@@ -28,11 +30,18 @@ type SignInValues = {
   email: string;
   password: string;
 };
+const SignInDefaultValues: SignInValues = {
+  email: "",
+  password: "",
+};
 
 const SignIn = () => {
-  const { control, handleSubmit, formState } = useForm<SignInValues>({
-    defaultValues: { email: "", password: "" },
-  }); // const { handleSetUser } = useAuthContext();
+  const { t, i18n } = useTranslation();
+
+  const { control, handleSubmit, formState, trigger, reset } =
+    useForm<SignInValues>({
+      defaultValues: { email: "", password: "" },
+    }); // const { handleSetUser } = useAuthContext();
 
   // const { register, handleSubmit } = useForm();
 
@@ -41,6 +50,14 @@ const SignIn = () => {
   //   email: "",
   //   password: "",
   // });
+
+  useEffect(() => {
+    reset(SignInDefaultValues);
+  }, [reset]);
+
+  useEffect(() => {
+    trigger();
+  }, [i18n.language]);
 
   const { mutate: handleLogin } = useMutation({
     mutationKey: ["login"],
@@ -91,6 +108,7 @@ const SignIn = () => {
               name="email"
               control={control}
               rules={{
+                required: t("signUp-email"),
                 pattern: {
                   value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                   message: t("signUp-email"),

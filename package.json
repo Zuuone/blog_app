@@ -11,7 +11,7 @@
     "prettier": "prettier . --write",
     "preview": "vite preview",
     "prepare": "husky",
-    "update-supabase-types": "npx supabase gen types --lang=typescript --project-id nhxmyxnroufzfvhhmsrx --schema public > src/supabase/account/index.types.ts"
+    "update-supabase-types": "npx supabase gen types --lang=typescript --project-id enlliustgmqovaynrnhr --schema public > src/supabase/account/index.types.ts"
   },
   "dependencies": {
     "@dicebear/avataaars": "^9.2.2",

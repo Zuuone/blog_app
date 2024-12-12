@@ -19,6 +19,7 @@ const LazyHomeView = lazy(() => import("@/layouts/default/index"));
 const LazyAboutView = lazy(() => import("@/pages/aboutUs/views/index"));
 const LazyLoginView = lazy(() => import("@/pages/auth/signIn/signIn"));
 const LazySignUpView = lazy(() => import("@/pages/auth/signUp/signUp"));
+const LazyBlogsView = lazy(() => import("@/blogs/index"));
 const LazyAuthorFourView = lazy(
   () => import("@/pages/authors/author4/views/index"),
 );
@@ -78,6 +79,14 @@ function App() {
             element={
               <Suspense fallback={<div>Loading...</div>}>
                 <LazyAboutView />
+              </Suspense>
+            }
+          />
+          <Route
+            path="blogs"
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazyBlogsView />
               </Suspense>
             }
           />
