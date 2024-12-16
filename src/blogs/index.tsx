@@ -1,10 +1,13 @@
-import { Button } from "@/components/ui/button";
+import CreateBlogForm from "@/blogs/create";
+// import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { userAtom } from "@/store/auth";
 import { supabase } from "@/supabase";
-import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import qs from "qs";
+import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { useSearchParams } from "react-router-dom";
+import underscore from "underscore";
 
 type SingleBlog = {
   created_at: string;
@@ -17,137 +20,96 @@ type SingleBlog = {
   user_id: string;
 };
 
-type BlogsListCreateValue = {
-  title_ka: string;
-  title_en: string;
-  description_ka: string;
-  description_en: string;
-  image_file: null | File;
+type BlogsFilterFormValues = {
+  searchText: string;
 };
 
-const BlogsFilterFormatDefaultValues = {
-  title_ka: "",
-  title_en: "",
-  description_ka: "",
-  description_en: "",
-  image_file: null,
-};
-
+// const blogsFilterFormatDefaultValues = {
+//   searchText: "",
+// };
 const BlogsView = () => {
-  const [user] = useAtom(userAtom);
+  const { i18n } = useTranslation();
   const [blogs, setBlogs] = useState<SingleBlog[]>([]);
-  const { control, handleSubmit } = useForm<BlogsListCreateValue>({
-    defaultValues: BlogsFilterFormatDefaultValues,
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const parsedQueryParams = qs.parse(searchParams.toString());
+  const { control, watch } = useForm<BlogsFilterFormValues>({
+    defaultValues: parsedQueryParams,
   });
 
   useEffect(() => {
+    const parsedSearchParams = qs.parse(searchParams.toString());
+    const searchText = parsedSearchParams?.searchText;
     supabase
       .from("Blogs")
       .select("*")
+      .ilike(`title_${i18n.language}`, `%${searchText ?? ""}%`)
       .throwOnError()
       .then((res) => {
         const blogsList = res.data as unknown as SingleBlog[];
         setBlogs(blogsList || []);
-        // console.log(blogs);
+        console.log(i18n.language);
       });
   }, []);
 
-  const onSubmit = (formValues: BlogsListCreateValue) => {
-    if (formValues?.image_file) {
-      return supabase.storage
-        .from("blog_images")
-        .upload(formValues?.image_file?.name, formValues?.image_file)
+  const watchedSearchText = watch("searchText");
+
+  // useEffect(()=>)
+  const fetchBlogs = useCallback(
+    underscore.debounce((watchedSearchText: string) => {
+      supabase
+        .from("Blogs")
+        .select("*")
+        .ilike(`title_${i18n.language}`, `%${watchedSearchText}%`)
+        .throwOnError()
         .then((res) => {
-          return supabase.from("Blogs").insert({
-            title_ka: formValues.title_ka,
-            title_en: formValues.title_en,
-            description_ka: formValues.description_ka,
-            description_en: formValues.description_en,
-            image_url: res.data?.fullPath,
-            user_id: user?.user?.id,
-          });
-        })
-        .then((res) => console.log("Successfully created blog: ", res));
+          const blogsList = res.data as unknown as SingleBlog[];
+          setBlogs(blogsList || []);
+          // console.log(blogs);
+        });
+    }, 1000),
+    [watchedSearchText],
+  );
+  useEffect(() => {
+    if (watchedSearchText?.length > 2) {
+      fetchBlogs(watchedSearchText);
     }
-    console.log("form values", formValues);
-  };
+  }, [watchedSearchText, fetchBlogs]);
+
+  // const onSubmit = (searchFormValues: BlogsFilterFormValues) => {
+  //   const searchText = searchFormValues.searchText;
+
+  //   setSearchParams(
+  //     qs.stringify(searchFormValues, {
+  //       skipNulls: true,
+  //       filter: (_, value) => {
+  //         return value || undefined;
+  //       },
+  //     }),
+  //   );
+
   // console.log(user);
 
   return (
     <>
       <div className="flex flex-col items-center">
-        {/* <CreateBlogForm /> */}
-        <div className="mt-14 flex w-1/3 flex-col items-center justify-center gap-x-4 gap-y-10 rounded-md border-2 border-solid border-black px-44 py-24">
-          <Controller
-            control={control}
-            name="title_ka"
-            render={({ field: { onChange, value } }) => {
-              return (
-                <Input
-                  onChange={onChange}
-                  value={value}
-                  placeholder="სათაური ქართულად"
-                />
-              );
-            }}
-          />
-          <Controller
-            control={control}
-            name="title_en"
-            render={({ field: { onChange, value } }) => {
-              return (
-                <Input
-                  onChange={onChange}
-                  value={value}
-                  placeholder="Title in English"
-                />
-              );
-            }}
-          />
-          <Controller
-            control={control}
-            name="description_ka"
-            render={({ field: { onChange, value } }) => {
-              return (
-                <Input
-                  onChange={onChange}
-                  value={value}
-                  placeholder="აღწერა ქართულად"
-                />
-              );
-            }}
-          />
-          <Controller
-            control={control}
-            name="description_en"
-            render={({ field: { onChange, value } }) => {
-              return (
-                <Input
-                  onChange={onChange}
-                  value={value}
-                  placeholder="Description in English"
-                />
-              );
-            }}
-          />
-          <Controller
-            control={control}
-            name="image_file"
-            render={({ field: { onChange } }) => {
-              return (
-                <Input
-                  type="file"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    onChange(file);
-                  }}
-                  placeholder="file"
-                />
-              );
-            }}
-          />
-          <Button onClick={handleSubmit(onSubmit)}>Create Blog</Button>
-        </div>
+        <CreateBlogForm />
+      </div>
+      <div className="mx-auto my-20 flex w-1/3 flex-col items-center justify-center gap-5">
+        <Controller
+          control={control}
+          name="searchText"
+          render={({ field: { onChange, value } }) => {
+            return (
+              <Input
+                onChange={onChange}
+                value={value}
+                placeholder="Enter Search Text..."
+              />
+            );
+          }}
+        />
+        {/* <Button onClick={handleSubmit(onSubmit)}>Search</Button> */}
       </div>
       <div className="mt-7 flex flex-col items-center gap-y-4 border-gray-400">
         {blogs.map((blog) => {

@@ -57,7 +57,7 @@ import { useTranslation } from "react-i18next";
 const Langtoggle = () => {
   const { t, i18n } = useTranslation();
   const handleLanguageChange = (lang: string) => {
-    i18n.changeLanguage(lang); // Change the language when a user selects a language
+    i18n.changeLanguage(lang);
   };
 
   return (
