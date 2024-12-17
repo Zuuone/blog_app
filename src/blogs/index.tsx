@@ -3,11 +3,13 @@ import CreateBlogForm from "@/blogs/create";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/supabase";
 import qs from "qs";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import underscore from "underscore";
+// import underscore from "underscore";
+import { useDebounce } from "@uidotdev/usehooks";
+import dayjs from "dayjs";
 
 type SingleBlog = {
   created_at: string;
@@ -36,6 +38,9 @@ const BlogsView = () => {
   const { control, watch } = useForm<BlogsFilterFormValues>({
     defaultValues: parsedQueryParams,
   });
+  const watchedSearchText = watch("searchText");
+
+  const debouncedSearchText = useDebounce(watchedSearchText, 1000);
 
   useEffect(() => {
     const parsedSearchParams = qs.parse(searchParams.toString());
@@ -52,11 +57,26 @@ const BlogsView = () => {
       });
   }, []);
 
-  const watchedSearchText = watch("searchText");
-
   // useEffect(()=>)
-  const fetchBlogs = useCallback(
-    underscore.debounce((watchedSearchText: string) => {
+  // const fetchBlogs = useCallback(
+  //   underscore.debounce((watchedSearchText: string) => {
+  //     supabase
+  //       .from("Blogs")
+  //       .select("*")
+  //       .ilike(`title_${i18n.language}`, `%${watchedSearchText}%`)
+  //       .throwOnError()
+  //       .then((res) => {
+  //         const blogsList = res.data as unknown as SingleBlog[];
+  //         setBlogs(blogsList || []);
+  //         // console.log(blogs);
+  //       });
+  //   }, 1000),
+  //   [],
+  // );
+  useEffect(() => {
+    if (debouncedSearchText?.length > 2) {
+      setSearchParams({ searchText: debouncedSearchText });
+
       supabase
         .from("Blogs")
         .select("*")
@@ -67,14 +87,19 @@ const BlogsView = () => {
           setBlogs(blogsList || []);
           // console.log(blogs);
         });
-    }, 1000),
-    [watchedSearchText],
-  );
-  useEffect(() => {
-    if (watchedSearchText?.length > 2) {
-      fetchBlogs(watchedSearchText);
+      // fetchBlogs(watchedSearchText);
+    } else {
+      setSearchParams({ searchText: "" });
+      supabase
+        .from("Blogs")
+        .select("*")
+        .throwOnError()
+        .then((res) => {
+          const blogsList = res.data as SingleBlog[];
+          setBlogs(blogsList || []);
+        });
     }
-  }, [watchedSearchText, fetchBlogs]);
+  }, [debouncedSearchText, setSearchParams]);
 
   // const onSubmit = (searchFormValues: BlogsFilterFormValues) => {
   //   const searchText = searchFormValues.searchText;
@@ -103,7 +128,7 @@ const BlogsView = () => {
             return (
               <Input
                 onChange={onChange}
-                value={value}
+                value={value || ""}
                 placeholder="Enter Search Text..."
               />
             );
@@ -118,6 +143,14 @@ const BlogsView = () => {
                 import.meta.env.VITE_SUPABASE_BLOG_IMAGES_STORAGE_URL
               }/${blog?.image_url}`
             : "";
+          const creationDate = dayjs(blog.created_at);
+          const isOlderThanOneDay = creationDate.isBefore(
+            dayjs().subtract(1, "day"),
+          );
+
+          const relativeCreationTime = isOlderThanOneDay
+            ? creationDate.format("HH:mm - DD/MM/YYYY") // If older than 24 hours
+            : creationDate.fromNow(); // If within the last 24 hours
           return (
             <div
               key={blog.id}
@@ -130,6 +163,9 @@ const BlogsView = () => {
               <div>{blog?.title_en}</div>
               <div>{blog?.description_ka}</div>
               <div>{blog?.description_en}</div>
+              <div className="flex justify-end">
+                <p>Created: {relativeCreationTime}</p>
+              </div>
             </div>
           );
         })}

@@ -4,6 +4,12 @@ import { userAtom } from "@/store/auth";
 import { supabase } from "@/supabase";
 import { useAtom } from "jotai";
 import { Controller, useForm } from "react-hook-form";
+
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
+
 type BlogsListCreateValue = {
   title_ka: string;
   title_en: string;
@@ -26,6 +32,8 @@ const CreateBlogForm = () => {
   });
 
   const onSubmit = (formValues: BlogsListCreateValue) => {
+    const creationDate = dayjs();
+
     if (formValues?.image_file) {
       return supabase.storage
         .from("blog_images")
@@ -38,6 +46,7 @@ const CreateBlogForm = () => {
             description_en: formValues.description_en,
             image_url: res.data?.fullPath,
             user_id: user?.user?.id,
+            created_at: creationDate.toISOString(),
           });
         })
         .then((res) => console.log("Successfully created blog: ", res));
